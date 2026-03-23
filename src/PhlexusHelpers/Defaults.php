@@ -91,7 +91,7 @@ class Defaults
      */
     public static function getSMS(): SMSClient
     {
-        return self::getByName('email');
+        return self::getByName('sms');
     }
 
     /**
