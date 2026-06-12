@@ -24,5 +24,5 @@ return [
 
     \Phlexus\Providers\CartProvider::class,
 
-    \Phlexus\Modules\Shop\Providers\PayPalProvider::class,
+    \Phlexus\Modules\Shop\Providers\StripeProvider::class,
 ];

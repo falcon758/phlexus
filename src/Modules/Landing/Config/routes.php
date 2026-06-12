@@ -20,4 +20,36 @@ $routes->addPost('/doContact', [
     'action'     => 'doContact',
 ]);
 
+// Legal
+
+$routes->addGet('/terms-and-conditions', [
+    'controller' => 'legal',
+    'action'     => 'termsConditions',
+]);
+
+$routes->addGet('/disclaimer', [
+    'controller' => 'legal',
+    'action'     => 'disclaimer',
+]);
+
+$routes->addGet('/privacy-policy', [
+    'controller' => 'legal',
+    'action'     => 'privacyPolicy',
+]);
+
+$routes->addGet('/use-policy', [
+    'controller' => 'legal',
+    'action'     => 'usePolicy',
+]);
+
+$routes->addGet('/cookie-policy', [
+    'controller' => 'legal',
+    'action'     => 'cookiePolicy',
+]);
+
+$routes->addGet('/return-policy', [
+    'controller' => 'legal',
+    'action'     => 'returnPolicy',
+]);
+
 return $routes;
