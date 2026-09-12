@@ -10,7 +10,7 @@ return [
             'city'      => 'City',
             'post_code' => '11111'
         ],
-        'email' => 'ltd@example'
+        'email' => 'ltd@example.com'
     ],
 
     'application' => [
@@ -51,9 +51,9 @@ return [
     ],
 
     'translations' => [
-        'type'   => \Phlexus\Libraries\Translations\TranslationFactory::REDIS,
+        'type'   => \Phlexus\Libraries\Translations\TranslationFactory::DATABASE,
         'config' => [
-            'files_dir' => dirname(__DIR__) .'/translations',
+            'files_dir' => dirname(__DIR__) . '/translations',
             'default_language' => 'en-us',
         ],
     ],
@@ -62,28 +62,42 @@ return [
         'email' => [
             'config' => [
                 'is_smtp'  => true,
-                'host'     => '',
-                'name'     => '',
-                'username' => '',
-                'password' => '',
-                'port'     => '',
+                'host'     => getenv('SMTP_HOST') ?: '',
+                'name'     => getenv('SMTP_NAME') ?: '',
+                'username' => getenv('SMTP_USERNAME') ?: '',
+                'password' => getenv('SMTP_PASSWORD') ?: '',
+                'port'     => getenv('SMTP_PORT') ?: '',
             ],
         ],
 
         'sms' => [
-            'from'=> '',
+            'from' => getenv('SMS_FROM') ?: '',
             'config' => [
-                'sid'   => '',
-                'token' => '',
-            ]
+                'sid'   => getenv('TWILIO_SID') ?: '',
+                'token' => getenv('TWILIO_TOKEN') ?: '',
+            ],
         ],
     ],
-    
-    // Not required
+
+    'oauth' => [
+        'google' => [
+            'client_id' => getenv('GOOGLE_CLIENT_ID') ?: '',
+            'client_secret' => getenv('GOOGLE_CLIENT_SECRET') ?: '',
+            'redirect_uri' => getenv('GOOGLE_REDIRECT_URI') ?: '',
+            //'hosted_domain' => getenv('GOOGLE_HOSTED_DOMAIN') ?: '',
+        ],
+        'apple' => [
+            'client_id' => getenv('APPLE_CLIENT_ID') ?: '',
+            'team_id' => getenv('APPLE_TEAM_ID') ?: '',
+            'key_id' => getenv('APPLE_KEY_ID') ?: '',
+            'key_file_path' => getenv('APPLE_KEY_FILE_PATH') ?: '',
+            'redirect_uri' => getenv('APPLE_REDIRECT_URI') ?: '',
+        ],
+    ],
+
     'payments' => [
-        'paypal' => [
-            'client_id'     => '',
-            'client_secret' => ''
+        'stripe' => [
+            'secret_key' => getenv('STRIPE_SECRET_KEY') ?: '',
         ],
     ],
 
@@ -98,12 +112,12 @@ return [
     'view' => [
         'engines' => [
             '.phtml' => [
-                'class' => \Phalcon\Mvc\View\Engine\Php::class
+                'class' => \Phalcon\Mvc\View\Engine\Php::class,
             ],
             '.volt'  => [
                 'class'   => \Phalcon\Mvc\View\Engine\Volt::class,
                 'options' => [
-                    'path' => dirname(__DIR__). '/var/cache/',
+                    'path' => dirname(__DIR__) . '/var/cache/',
                 ],
             ],
         ],
@@ -114,14 +128,12 @@ return [
     'providers' => include_once 'providers.php',
 
     'security' => [
-        'app_hash' => 'A_STRONG_HASH',
-
+        'app_hash' => getenv('APP_HASH') ?: 'A_STRONG_HASH',
         'work_factor' => 14,
-        
         'captcha' => [
             'config' => [
-                'site-key'=> '',
-                'secret'  => '',
+                'site-key' => getenv('CAPTCHA_SITE_KEY') ?: '',
+                'secret'   => getenv('CAPTCHA_SECRET') ?: '',
             ],
         ],
     ],
@@ -131,8 +143,8 @@ return [
             'config' => [
                 'defaultSerializer' => 'Json',
                 'lifetime'          => 7200,
-                'host'              => 'localhost',
-                'port'              => 6379,
+                'host'              => getenv('REDIS_HOST') ?: 'localhost',
+                'port'              => getenv('REDIS_PORT') ?: 6379,
                 'index'             => 1,
             ],
         ],
